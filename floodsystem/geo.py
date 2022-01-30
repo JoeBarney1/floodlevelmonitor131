@@ -17,3 +17,10 @@ def stations_by_distance(stations, p):
     sorted_station_distances = sorted_by_key(station_distances, int(1)) #sorts list based on second item i.e distance not name
     return sorted_station_distances
     
+def stations_within_radius(stations, centre, r):
+    final_list = []
+    for tt in stations:
+        stloc = tt.coord
+        if haversine(stloc, centre) < r:
+            final_list.append(tt.name)
+    return final_list
