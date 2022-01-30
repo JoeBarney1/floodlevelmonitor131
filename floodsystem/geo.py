@@ -5,5 +5,13 @@
 geographical data.
 
 """
-
+import haversine
 from .utils import sorted_by_key  # noqa
+
+def stations_within_radius(stations, centre, r):
+    final_list = []
+    for tt in stations:
+        stloc = tt.coord
+        if haversine(stloc, centre) < r:
+            final_list.append(tt.name)
+    return final_list
