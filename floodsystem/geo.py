@@ -5,7 +5,7 @@
 geographical data.
 
 """
-import haversine
+from haversine import haversine
 from .utils import sorted_by_key  # noqa
 
 def stations_within_radius(stations, centre, r):
