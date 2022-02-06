@@ -7,6 +7,8 @@ for manipulating/modifying station data
 """
 
 
+NoneType = type(None)
+
 class MonitoringStation:
     """This class represents a river level monitoring station"""
 
@@ -38,3 +40,18 @@ class MonitoringStation:
         d += "   river:         {}\n".format(self.river)
         d += "   typical range: {}".format(self.typical_range)
         return d
+ 
+    def typical_range_consistent(self):
+        if type(self.typical_range)== NoneType:
+            return False
+        elif self.typical_range[0]<= self.typical_range[1]:
+            return True
+        else:
+            return False
+
+def inconsistent_typical_range_stations(stations):
+    inconsistent_stations=[]
+    for station in stations:
+        if MonitoringStation.typical_range_consistent(station)==False:
+            inconsistent_stations.append(station.name)
+    return inconsistent_stations
