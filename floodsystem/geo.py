@@ -17,3 +17,19 @@ def stations_by_distance(stations, p):
     sorted_station_distances = sorted_by_key(station_distances, int(1)) #sorts list based on second item i.e distance not name
     return sorted_station_distances
     
+
+def rivers_with_station(stations):
+    list_rivers=[] 
+    for station in stations: #iterates over all the station objects in the given list
+        list_rivers.append(station.river) #add each river to the list
+    set_rivers=set(list_rivers) #removes duplicate rivers
+    return set_rivers
+
+def stations_by_river(stations):
+    dict_rivers={} #creates empty dictionary
+    for station in stations:#iterates over all the station objects in the given list
+        if station.river in dict_rivers.keys(): #checks to see if river is already in dictionary
+            dict_rivers[station.river].append(station.name) #adds new station name if river has already been added as a key
+        else:
+            dict_rivers[station.river]=[station.name] #creates new river key if river isn't in dictionary
+    return dict_rivers
