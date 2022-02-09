@@ -67,8 +67,8 @@ def test_inconsistent_typical_range_stations():
     NoneStation = MonitoringStation(s_id, m_id, label, coord, NoneRange, river, town)
     consistentStation = MonitoringStation(s_id, m_id, label, coord, consistentrange, river, town)
     stations = [inconsistentStation, NoneStation, consistentStation]
-    assert inconsistentStation in inconsistent_typical_range_stations(stations)
-    assert consistentStation not in inconsistent_typical_range_stations(stations)
-    assert NoneStation in inconsistent_typical_range_stations(stations)
+    assert inconsistentStation.station_id in inconsistent_typical_range_stations(stations)
+    assert consistentStation.station_id not in inconsistent_typical_range_stations(stations)
+    assert NoneStation.station_id in inconsistent_typical_range_stations(stations)
 
 
