@@ -56,16 +56,18 @@ def test_inconsistent_typical_range_stations():
     """
     s_id = "test-s-id"
     m_id = "test-m-id"
-    label = "some station"
+    label1 = "some inconsistent station"
+    label2 = "some consistent station"
+    label3 = "some nonetype station"
     coord = (-2.0, 4.0)
     river = "River X"
     town = "My Town"
     inconsistentrange = (7, -2.45)
     NoneRange = None
     consistentrange = (-0.9, 1.12)
-    inconsistentStation = MonitoringStation(s_id, m_id, label, coord, inconsistentrange, river, town)
-    NoneStation = MonitoringStation(s_id, m_id, label, coord, NoneRange, river, town)
-    consistentStation = MonitoringStation(s_id, m_id, label, coord, consistentrange, river, town)
+    inconsistentStation = MonitoringStation(s_id, m_id, label1, coord, inconsistentrange, river, town)
+    NoneStation = MonitoringStation(s_id, m_id, label3, coord, NoneRange, river, town)
+    consistentStation = MonitoringStation(s_id, m_id, label2, coord, consistentrange, river, town)
     stations = [inconsistentStation, NoneStation, consistentStation]
     assert inconsistentStation.name in inconsistent_typical_range_stations(stations)
     assert consistentStation.name not in inconsistent_typical_range_stations(stations)
