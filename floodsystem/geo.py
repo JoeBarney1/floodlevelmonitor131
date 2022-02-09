@@ -11,6 +11,7 @@ from floodsystem.stationdata import build_station_list
 
 
 def stations_by_distance(stations, p): 
+    """calculates nautical distance from each item in list, to coordinates p"""
     station_distances=[] #empty list for station name and dist from p
     for station in stations:
         distance=float(haversine(p,station.coord)) #set distance for each loop as dist from p
@@ -20,6 +21,7 @@ def stations_by_distance(stations, p):
     
 
 def rivers_with_station(stations):
+    """creates a list of rivers with stations on them, removes duplicates if rivers have more than one station"""
     list_rivers=[] 
     for station in stations: #iterates over all the station objects in the given list
         list_rivers.append(station.river) #add each river to the list
@@ -27,6 +29,7 @@ def rivers_with_station(stations):
     return set_rivers
 
 def stations_by_river(stations):
+    """creates a dictionary with river names as keys to a list of stations on each one"""
     dict_rivers={} #creates empty dictionary
     for station in stations:#iterates over all the station objects in the given list
         if station.river in dict_rivers.keys(): #checks to see if river is already in dictionary
@@ -36,6 +39,7 @@ def stations_by_river(stations):
     return dict_rivers
 
 def stations_within_radius(stations, centre, r):
+    """creates a list of stations within a certain radius from coordinates of 'centre' """
     final_list = []
     for tt in stations:
         stloc = tt.coord
@@ -44,6 +48,7 @@ def stations_within_radius(stations, centre, r):
     return final_list
 
 def rivers_by_station_number(stations, N):
+    """creates a list of the rivers with stations on them, in descending order of no. of stations on each river"""
     #Empty lists for the important variables. Num being the overall count for each river, and river_list being the list of all rivers each time it occurs.
     num = []
     river_list = []
