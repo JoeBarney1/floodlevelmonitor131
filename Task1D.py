@@ -4,6 +4,7 @@ from floodsystem.stationdata import build_station_list
 from floodsystem.geo import rivers_with_station
 from floodsystem.geo import stations_by_river
 def run():
+    """Requirements for Task 1D"""
     stations=build_station_list() #creates list of all station objects
     rivers_with_station(stations) #uses function to create list of all rivers with a station
     rivers_sorted=sorted(rivers_with_station(stations)) #sorts alphabetically
