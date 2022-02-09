@@ -5,7 +5,6 @@
 geographical data.
 
 """
-from importlib_metadata import import_module
 from haversine import haversine, Unit 
 from floodsystem.utils import sorted_by_key# noqa
 from floodsystem.stationdata import build_station_list
