@@ -17,7 +17,7 @@ def test_rivers_with_station():
     stations = build_station_list()
     rivers = geo.rivers_with_station(stations)
     assert len(rivers) < len(stations)
-    assert rivers[0] not in rivers[1:]
+    assert type(rivers) == set
 
 def test_stations_by_river():
     """This is a test to ensure that the stations_by_river function works.
@@ -25,7 +25,7 @@ def test_stations_by_river():
     """
     stations = build_station_list()
     stationsbyriver = geo.stations_by_river(stations)
-    assert stationsbyriver is type(dict)
+    assert type(stationsbyriver) == dict
 
 def test_rivers_by_station_number():
     """This is a test to ensure that the rivers_by_station_number function works.
