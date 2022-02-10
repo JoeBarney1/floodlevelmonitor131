@@ -43,18 +43,19 @@ class MonitoringStation:
  
     def typical_range_consistent(self):
         """Checks that the typical range of the high/low flood level are formatted correctly."""
-        if type(self.typical_range)== NoneType:
+        if type(self.typical_range)== NoneType: #checks if value is 'missing'
             return False
         elif self.typical_range[0]<= self.typical_range[1]:
+            #checks that higher level is more than lower level
             return True
         else:
             return False
 
 def inconsistent_typical_range_stations(stations):
     """Creates a list of any stations where the typical range is formatted incorrectly, or no data is provided."""
-    inconsistent_stations=[]
+    inconsistent_stations=[] # creates an empty list
     for station in stations:
-        if MonitoringStation.typical_range_consistent(station)==False:
+        if MonitoringStation.typical_range_consistent(station)==False: #uses above function to check whether range values are consistent
             inconsistent_stations.append(station.name)
     return inconsistent_stations
     
