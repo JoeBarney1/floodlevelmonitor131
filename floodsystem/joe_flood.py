@@ -2,6 +2,10 @@ from floodsystem.stationdata import build_station_list
 from floodsystem.station import MonitoringStation, NoneType
 from floodsystem.utils import sorted_by_key
 from floodsystem.stationdata import update_water_levels
+import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
+from floodsystem.datafetcher import fetch_measure_levels
+
 def stations_high_rel_level(stations,N):
     """calculates relative water level compared to its typical range, returns 'N' highest"""
     relative_levels=[] 
@@ -24,6 +28,26 @@ def stations_high_rel_level(stations,N):
     #adds station terms of sorted list to a new list
     return station_only
 
+
+
+def plot_water_levels(station, dates, levels):
+
+    t =dates
+    level = levels
+
+    # Plot
+    plt.plot(t, level)
+
+    # Add axis labels, rotate date labels and add plot title
+    plt.xlabel('date')
+    plt.ylabel('water level (m)')
+    plt.xticks(rotation=45);
+    plt.title("Station {}".format(station))
+
+    # Display plot
+    plt.tight_layout()  # This makes sure plot does not cut off date labels
+
+    plt.show()
 
 
     
