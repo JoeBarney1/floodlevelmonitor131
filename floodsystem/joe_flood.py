@@ -1,16 +1,19 @@
 from floodsystem.stationdata import build_station_list
-from floodsystem.station import MonitoringStation, inconsistent_typical_range_stations
+from floodsystem.station import MonitoringStation, NoneType
 from floodsystem.utils import sorted_by_key
-
+from floodsystem.stationdata import update_water_levels
 def stations_high_rel_level(stations,N):
     """calculates relative water level compared to its typical range, returns 'N' highest"""
     relative_levels=[] 
     #creates an empty list
+    update_water_levels(stations)
     for station in stations:
-        relative_level=station.typical_range[1]-station.latest_level
-        #finds difference between current station level and typical upper range
-        relative_levels.append((station,relative_level))
-        #adds station and its relative level as a tuple to a list
+        if station.typical_range != None and station.typical_range_consistent and station.latest_level !=None :
+            #only counts stations with consistent data
+            relative_level=station.latest_level-station.typical_range[1]
+            #finds difference between current station level and typical upper range
+            relative_levels.append((station,relative_level))
+            #adds station and its relative level as a tuple to a list
     sorted_relative_levels= sorted_by_key(relative_levels, int(1),reverse=True)
     #sorts list based on relative level, in reverse (to make list descending)
     station_only=[]
@@ -22,6 +25,6 @@ def stations_high_rel_level(stations,N):
     return station_only
 
     
-    
+
     
     
