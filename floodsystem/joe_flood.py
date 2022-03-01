@@ -3,7 +3,7 @@ from floodsystem.station import MonitoringStation, NoneType
 from floodsystem.utils import sorted_by_key
 from floodsystem.stationdata import update_water_levels
 import matplotlib.pyplot as plt
-from datetime import datetime, timedelta
+import datetime 
 from floodsystem.datafetcher import fetch_measure_levels
 import numpy as np
 
@@ -65,14 +65,20 @@ def highest_risk(stations,dt=3,N=10,y=3):
     #creates an empty list
     update_water_levels(stations)
     for station in stations:
-        if station.typical_range != None and station.typical_range_consistent and station.latest_level !=None :
-            #only counts stations with consistent data
+        if station.typical_range != None and station.typical_range_consistent and station.latest_level !=None:
+        #makes sure it only counts stations with consistent data
             relative_level=station.latest_level-station.typical_range[1]
             #finds difference between current station level and typical upper range
-            predicted_rise=(fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))[1][0]-fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))[1][-1])*(y/dt)
+            k=fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))
+            try:
+                predicted_rise= (k[1][0]-k[1][-1])*(int(y/dt))
+            except IndexError:
+                continue
+            except TypeError:
+                continue
             #takes difference between first and last values from second list of fetch measure levels funct, giving change in level over 'dt' days
-            #Then multiplies this diff by the number of days over which the risk levels are to be predicted, to get the predicted rise
-            predicted_rel_level=relative_level + predicted_rise
+            #Then multiplies this diff by the number of days over which the risk levels are to be predicted, to get the predicted rise                      
+            predicted_rel_level=round((relative_level + predicted_rise),4)
             if predicted_rel_level>5:
                 risk_rating="Severe"
             elif predicted_rel_level<5 and predicted_rel_level>=1:
@@ -81,16 +87,17 @@ def highest_risk(stations,dt=3,N=10,y=3):
                 risk_rating="Moderate"
             elif predicted_rel_level<0:
                 risk_rating="Low"
-            predicted_levels.append((station,predicted_rel_level,risk_rating))
-            #adds station and its relative level as a tuple to a list
+            predicted_levels.append((station.name, "Predicted relative level={}".format(predicted_rel_level) ,"Risk={}".format(risk_rating) ))
+            #adds station, its predicted level and its risk rating a tuple to a list
     sorted_predicted_levels= sorted_by_key(predicted_levels, int(1),reverse=True)
     #sorts list based on predicted level, in reverse (to make list descending)
     shortened_list=[]
-    #creates empty list for just stations
+    #creates empty list 'N' most at risk stations
     for tuple in sorted_predicted_levels[0:N]:
-        #iterates over first 'N' tuples in list of (station,predicted level)
+        #iterates over first 'N' tuples in list of (station,predicted level, risk rating)
         shortened_list.append(tuple)
-    #adds N tuple terms of sorted list to a new list
+    #adds N tuples of sorted list to a new list
     return shortened_list
+
     
     
