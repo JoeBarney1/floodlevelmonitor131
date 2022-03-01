@@ -4,7 +4,7 @@ import datetime
 def run():
     """Requirements for Task 2G"""
     stations= build_station_list()
-    print(highest_risk(stations))
+    print(highest_risk(stations,5,5,3))
 
 
 if __name__ == "__main__":

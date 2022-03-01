@@ -59,9 +59,8 @@ def plot_water_levels(station, dates, levels):
 # then find predicted relative level in next few days, adn rank using similar code to that in 1C  
 
 #Task 2G
-def highest_risk(stations,x=3,N=10,y=3):
-    """calculates relative risk level compared to its typical range, and 'predicted' level based on rise over past 'x' days. Predicts 'y' days into future, returns 'N' highest"""
-    dt=x
+def highest_risk(stations,dt=3,N=10,y=3):
+    """calculates relative risk level compared to its typical range, and 'predicted' level based on rise over past 'dt' days. Predicts 'y' days into future, returns 'N' highest"""
     predicted_levels=[] 
     #creates an empty list
     update_water_levels(stations)
@@ -70,7 +69,7 @@ def highest_risk(stations,x=3,N=10,y=3):
             #only counts stations with consistent data
             relative_level=station.latest_level-station.typical_range[1]
             #finds difference between current station level and typical upper range
-            predicted_rise=(fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))[1][0]-fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))[1][-1])*y
+            predicted_rise=(fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))[1][0]-fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))[1][-1])*(y/dt)
             #takes difference between first and last values from second list of fetch measure levels funct, giving change in level over 'dt' days
             #Then multiplies this diff by the number of days over which the risk levels are to be predicted, to get the predicted rise
             predicted_rel_level=relative_level + predicted_rise
@@ -86,12 +85,12 @@ def highest_risk(stations,x=3,N=10,y=3):
             #adds station and its relative level as a tuple to a list
     sorted_predicted_levels= sorted_by_key(predicted_levels, int(1),reverse=True)
     #sorts list based on predicted level, in reverse (to make list descending)
-    station_only=[]
+    shortened_list=[]
     #creates empty list for just stations
     for tuple in sorted_predicted_levels[0:N]:
         #iterates over first 'N' tuples in list of (station,predicted level)
-        station_only.append(tuple)
+        shortened_list.append(tuple)
     #adds N tuple terms of sorted list to a new list
-    return station_only
+    return shortened_list
     
     
