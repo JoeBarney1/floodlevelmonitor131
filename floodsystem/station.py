@@ -6,8 +6,6 @@ for manipulating/modifying station data
 """
 
 
-from sqlalchemy import Float
-
 
 NoneType = type(None)
 
