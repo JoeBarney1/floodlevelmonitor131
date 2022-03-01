@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from floodsystem.datafetcher import fetch_measure_levels
 import numpy as np
 
+#Plan for Task 2C
 def stations_high_rel_level(stations,N):
     """calculates relative water level compared to its typical range, returns 'N' highest"""
     relative_levels=[] 
@@ -30,7 +31,7 @@ def stations_high_rel_level(stations,N):
     return station_only
 
 
-
+#Plan for task 2E
 def plot_water_levels(station, dates, levels):
 
     t =dates
@@ -53,7 +54,7 @@ def plot_water_levels(station, dates, levels):
             plt.axhline(station.typical_range[1], color='r') # upper level
     plt.show()
 
-#plan for task G
+#plan for task 2G
 #function which calculates predicted overflowing level in a week based on current data
 #use effectively v. simple numerical integration, find relative level at some point, plus difference between current level and a few days ago,
 # then find predicted relative level in next few days, adn rank using similar code to that in 1C  
