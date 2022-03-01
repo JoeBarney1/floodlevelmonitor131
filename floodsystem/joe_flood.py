@@ -53,7 +53,7 @@ def plot_water_levels(station, dates, levels):
             plt.axhline(station.typical_range[1], color='r') # upper level
     plt.show()
 
-
+#plan for task G
 #function which calculates predicted overflowing level in a week based on current data
 #use effectively v. simple numerical integration, find relative level at some point, plus difference between current level and a few days ago,
 # then find predicted relative level in next few days, adn rank using similar code to that in 1C  
