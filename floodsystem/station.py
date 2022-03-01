@@ -3,8 +3,10 @@
 # SPDX-License-Identifier: MIT
 """This module provides a model for a monitoring station, and tools
 for manipulating/modifying station data
-
 """
+
+
+from sqlalchemy import Float
 
 
 NoneType = type(None)
@@ -30,6 +32,7 @@ class MonitoringStation:
         self.town = town
 
         self.latest_level = None
+        self.rel_water = None
 
     def __repr__(self):
         d = "Station name:     {}\n".format(self.name)
@@ -50,6 +53,14 @@ class MonitoringStation:
             return True
         else:
             return False
+    
+    def relative_water_level(self): 
+        if self.typical_range_consistent() == False:
+            return None
+        elif self.latest_level == None:
+            return None
+        else:
+            return (self.latest_level - self.typical_range[0]) / (self.typical_range[1] - self.typical_range[0])
 
 def inconsistent_typical_range_stations(stations):
     """Creates a list of any stations where the typical range is formatted incorrectly, or no data is provided."""

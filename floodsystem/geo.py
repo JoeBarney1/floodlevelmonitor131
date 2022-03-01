@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: MIT
 """This module contains a collection of functions related to
 geographical data.
-
 """
 from haversine import haversine, Unit 
 from floodsystem.utils import sorted_by_key# noqa
