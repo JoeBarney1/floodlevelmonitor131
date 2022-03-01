@@ -1,10 +1,10 @@
-from importlib_metadata import import_module
 from haversine import haversine, Unit 
 from floodsystem.utils import sorted_by_key# noqa
 from floodsystem.stationdata import build_station_list
 from floodsystem.geo import rivers_with_station
 from floodsystem.geo import stations_by_river
 def run():
+    """Requirements for Task 1D"""
     stations=build_station_list() #creates list of all station objects
     rivers_with_station(stations) #uses function to create list of all rivers with a station
     rivers_sorted=sorted(rivers_with_station(stations)) #sorts alphabetically
@@ -41,4 +41,3 @@ def run():
 if __name__ == "__main__":
     print("*** Task 1D: CUED Part IA Flood Warning System ***")
     run()
-
