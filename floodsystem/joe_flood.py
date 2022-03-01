@@ -5,6 +5,7 @@ from floodsystem.stationdata import update_water_levels
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 from floodsystem.datafetcher import fetch_measure_levels
+import numpy as np
 
 def stations_high_rel_level(stations,N):
     """calculates relative water level compared to its typical range, returns 'N' highest"""
@@ -34,13 +35,9 @@ def plot_water_levels(station, dates, levels):
 
     t =dates
     level = levels
-
     # Plot
     plt.plot(t, level)
-    level=station.typical_range[0]
-    plt.plot(t,level)
-    level=station.typical_range[1]
-    plt.plot(t,level)
+    
 
 
     # Add axis labels, rotate date labels and add plot title
@@ -51,11 +48,15 @@ def plot_water_levels(station, dates, levels):
 
     # Display plot
     plt.tight_layout()  # This makes sure plot does not cut off date labels
-
+    if station.typical_range != None:
+            plt.axhline(station.typical_range[0], color='r') # lower level
+            plt.axhline(station.typical_range[1], color='r') # upper level
     plt.show()
 
 
-    
+#function which calculates predicted overflowing level in a week based on current data
+#use effectively v. simple numerical integration, find relative level at some point, plus difference between current level and a few days ago,
+# then find predicted relative level in next few days, adn rank using similar code to that in 1C  
 
     
     
