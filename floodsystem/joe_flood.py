@@ -7,6 +7,17 @@ import datetime
 from floodsystem.datafetcher import fetch_measure_levels
 import numpy as np
 
+def stations_level_over_threshold(stations, tol):
+    over_limit = []
+    for station in stations:
+        if (type(station.latest_level) == float)  and (station.typical_range_consistent() == True):
+            if (station.relative_water_level() > tol):
+                over_limit.append((station, station.relative_water_level()))
+    
+    sorted_stations = sorted_by_key(over_limit, 1, True)
+
+    return (sorted_stations)
+
 #Task 2C
 def stations_highest_rel_level(stations,N):
     """calculates relative water level compared to its typical range, returns 'N' highest"""
@@ -31,29 +42,6 @@ def stations_highest_rel_level(stations,N):
     return station_only
 
 
-#task 2E
-def plot_water_levels(station, dates, levels):
-
-    t =dates
-    level = levels
-    # Plot
-    plt.plot(t, level)
-    
-
-
-    # Add axis labels, rotate date labels and add plot title
-    plt.xlabel('date')
-    plt.ylabel('water level (m)')
-    plt.xticks(rotation=45);
-    plt.title("Station {}".format(station.name))
-
-    # Display plot
-    plt.tight_layout()  # This makes sure plot does not cut off date labels
-    if station.typical_range != None:
-            plt.axhline(station.typical_range[0], color='r') # lower level
-            plt.axhline(station.typical_range[1], color='r') # upper level
-    plt.show()
-
 #function which calculates predicted overflowing level in a week based on current data
 #use effectively v. simple numerical integration, find relative level at some point, plus difference between current level and a few days ago,
 # then find predicted relative level in next few days, adn rank using similar code to that in 1C  
@@ -69,16 +57,20 @@ def highest_risk(stations,dt=3,N=10,y=3):
         #makes sure it only counts stations with consistent data
             relative_level=station.latest_level-station.typical_range[1]
             #finds difference between current station level and typical upper range
-            k=fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))
+            dates,levels=fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))
+            #finds dates,levels for river over past dt days
             try:
-                predicted_rise= (k[1][0]-k[1][-1])*(int(y/dt))
+                predicted_rise= (levels[0]-levels[-1])*(y/dt)
+            #takes difference between first and last values from levels list,to get change in level over 'dt' days. Then divides by dt for rise per day
+            #Then multiplies this diff by the number of days over which the risk levels are to be predicted, to get the predicted rise     
             except IndexError:
+            #avoids an error when fetch measure levels is an empty list, due to an 'except IndexError' added in the fetch function
                 continue
             except TypeError:
-                continue
-            #takes difference between first and last values from second list of fetch measure levels funct, giving change in level over 'dt' days
-            #Then multiplies this diff by the number of days over which the risk levels are to be predicted, to get the predicted rise                      
+            #avoids an error when fetch measure levels[0] or levels[-1] is a list, due to an Error in the fetch function
+                continue                 
             predicted_rel_level=round((relative_level + predicted_rise),4)
+            #predicted relative level is current level added to expected rise, rounded to 4dp
             if predicted_rel_level>5:
                 risk_rating="Severe"
             elif predicted_rel_level<5 and predicted_rel_level>=1:
@@ -87,6 +79,7 @@ def highest_risk(stations,dt=3,N=10,y=3):
                 risk_rating="Moderate"
             elif predicted_rel_level<0:
                 risk_rating="Low"
+            #applies an arbitrary risk rating based on predicted level
             predicted_levels.append((station.name, "Predicted relative level={}".format(predicted_rel_level) ,"Risk={}".format(risk_rating) ))
             #adds station, its predicted level and its risk rating a tuple to a list
     sorted_predicted_levels= sorted_by_key(predicted_levels, int(1),reverse=True)
