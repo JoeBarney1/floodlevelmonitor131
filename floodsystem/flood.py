@@ -6,7 +6,7 @@ from floodsystem.station import MonitoringStation, NoneType
 import datetime
 from .datafetcher import fetch_measure_levels
 
-def stations_high_rel_level(stations,N):
+def stations_highest_rel_level(stations,N):
     """calculates relative water level compared to its typical range, returns 'N' highest"""
     relative_levels=[] 
     #creates an empty list
