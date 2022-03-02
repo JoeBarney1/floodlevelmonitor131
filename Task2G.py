@@ -1,4 +1,4 @@
-from floodsystem.joe_flood import highest_risk
+from floodsystem.flood import highest_risk
 from floodsystem.stationdata import build_station_list
 
 def run():

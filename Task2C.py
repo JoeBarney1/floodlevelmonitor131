@@ -1,6 +1,6 @@
 from floodsystem.stationdata import build_station_list
 from floodsystem.station import MonitoringStation, inconsistent_typical_range_stations
-from floodsystem.joe_flood import stations_high_rel_level
+from floodsystem.flood import stations_high_rel_level
 from floodsystem.utils import sorted_by_key
 
 
