@@ -85,9 +85,9 @@ from floodsystem.joe_flood import highest_risk
 #     #adds N tuples of sorted list to a new list
 #     return shortened_list
 stations=build_station_list()
-dt=1
-    #k=fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))
-print(highest_risk(stations[0:200], dt=1,N=3,y=2))
+# dt=1
+#     #k=fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))
+# print(highest_risk(stations[0:200], dt=1,N=3,y=2))
     # try:
         # if type(k[1][0]) == 'list' or type(k[1][-1])=='list':
         #     print(k[1][0], k[1][-1])
@@ -96,4 +96,4 @@ print(highest_risk(stations[0:200], dt=1,N=3,y=2))
     #         print([1, 3, 4])
     # except IndexError:
     #     continue
-
+print(len(stations))
