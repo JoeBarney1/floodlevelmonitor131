@@ -60,7 +60,9 @@ def highest_risk(stations,dt=3,N=10,y=3):
             try:
                 predicted_rise= (levels[0]-levels[-1])*(y/dt)
             #takes difference between first and last values from levels list,to get change in level over 'dt' days. Then divides by dt for rise per day
-            #Then multiplies this diff by the number of days over which the risk levels are to be predicted, to get the predicted rise     
+            #Then multiplies this diff by the number of days over which the risk levels are to be predicted, to get the predicted rise  
+            
+            # COULD USE MORE RECENT GRADIENT, which   
             except IndexError:
             #avoids an error when fetch measure levels is an empty list, due to an 'except IndexError' added in the fetch function
                 continue
