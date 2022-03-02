@@ -2,13 +2,13 @@ from typing import List
 from sympy import stationary_points
 from floodsystem.stationdata import build_station_list, update_water_levels
 import datetime
-from floodsystem.joe_flood import plot_water_levels, stations_highest_rel_level
+from joe_flood import plot_water_levels, stations_highest_rel_level
 from floodsystem.datafetcher import fetch, fetch_measure_levels
 from floodsystem.stationdata import build_station_list
 import datetime
 from floodsystem.utils import sorted_by_key
 from floodsystem.station import MonitoringStation
-from floodsystem.joe_flood import highest_risk
+from joe_flood import highest_risk
 # stations=build_station_list()
 # update_water_levels(stations)
 # for station in stations:

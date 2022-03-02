@@ -5,7 +5,7 @@ from floodsystem.stationdata import update_water_levels
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 from floodsystem.datafetcher import fetch_measure_levels
-from .analysis import polyfit
+from .floodsystem.analysis import polyfit
 import numpy as np
 import matplotlib.dates as da
 
