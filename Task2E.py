@@ -1,12 +1,11 @@
 import datetime
-from floodsystem.joe_flood import plot_water_levels, stations_high_rel_level
+from floodsystem.joe_flood import stations_highest_rel_level
 from floodsystem.datafetcher import fetch_measure_levels
 from floodsystem.stationdata import build_station_list
-import datetime
-
+from floodsystem.plot import plot_water_levels
 def run():
     stations=build_station_list()
-    s=stations_high_rel_level(stations,5)
+    s=stations_highest_rel_level(stations,5)
     #gets top 5 relative levelled stations
     dt = 10
     for station in s:
