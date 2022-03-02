@@ -32,11 +32,15 @@ def plot_water_levels(station, dates, levels):
     plt.show()
 
 def plot_water_level_with_fit(station, dates, levels, p):
+
         poly, d0 = polyfit(dates, levels, p)
+        #Initial plot simply showing levels by day.
         plt.plot(dates, levels)
         dates_floats = da.date2num(dates)
+        #Plot the graph showing the polyfit function.
         plt.plot(dates, poly(dates_floats - dates_floats[0]), color='g')
         if station.typical_range_consistent():
+                #Plot the horizontal lines across the graph showing where the typical range values lie.
                 plt.axhline(y = station.typical_range[0], color = 'r', linestyle = '-')
                 plt.axhline(y = station.typical_range[1], color = 'r', linestyle = '-')
         plt.xlabel('Date')
