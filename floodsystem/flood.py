@@ -80,7 +80,7 @@ def highest_risk(stations,dt=3,N=10,y=3):
             elif predicted_rel_level<0:
                 risk_rating="Low"
             #applies an arbitrary risk rating based on predicted level
-            predicted_levels.append((station.name, "Predicted relative level={}".format(predicted_rel_level) ,"Risk={}".format(risk_rating) ))
+            predicted_levels.append((station.town, "Predicted relative level={}".format(predicted_rel_level) ,"Risk={}".format(risk_rating) ))
             #adds station, its predicted level and its risk rating a tuple to a list
     sorted_predicted_levels= sorted_by_key(predicted_levels, int(1),reverse=True)
     #sorts list based on predicted level, in reverse (to make list descending)
@@ -91,6 +91,6 @@ def highest_risk(stations,dt=3,N=10,y=3):
         shortened_list.append(tuple)
     #adds N tuples of sorted list to a new list
     print("This prediction is based on data over the past {} days, predicting {} days into the future".format(dt,y))
-    return shortened_list
+    return seshortened_list
 
     
